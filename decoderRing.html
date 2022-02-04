@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>In-Class Exercise 01</title>
+</head>
+<script>
+function decoderRing(rotation) {
+  const obj = {
+    encodeMap: {},
+    decodeMap: {}
+  };
+  // (1) Initialize encodeMap & (2) decodeMap
+  for (let i = 0; i < 26; i++) {
+    // YOU DO THIS PART
+    obj.encodeMap[String.fromCharCode(i+97)] = String.fromCharCode((i+rotation)%26+97);
+    obj.decodeMap[String.fromCharCode((i+rotation)%26+97)] = String.fromCharCode(i+97);
+  }
+
+  // (2) Write functions for
+  // (2.1) encode  
+  obj.encode = function(str) {
+    // YOU DO THIS PART
+    let temp = '';
+    for(let j = 0; j < str.length; j++){
+      if(str[j]===' '){
+        temp = temp + ' ';
+      }
+      else{
+        temp = temp + String.fromCharCode((((str.charCodeAt(j)-97)+rotation)%26)+97);
+      }
+    }
+    console.log(temp);
+    return temp;
+  }
+
+  // (2.2) decode
+  obj.decode = function(str) {
+    // YOU DO THIS PART
+    let temp2 = '';
+    for(let k = 0; k < str.length; k++){
+      if(str[k]===' '){
+        temp2 = temp2 + ' ';
+      }
+      else{
+        temp2 = temp2 + String.fromCharCode((((str.charCodeAt(k)-97)-rotation)%26)+97);
+      }
+    }
+    console.log(temp2);
+    return temp2;
+  }
+  return obj;
+}
+
+// Write THREE TESTS using console.assert.
+const dr = decoderRing(2); // rotation of 2
+
+console.assert(dr.encode("hello world")==="jgnnq yqtnf");
+console.assert(dr.decode("jgnnq yqtnf")==="hello world");
+console.assert(dr.encode("This is a test")==="Vjku ku c vguv");
+
+// verify that the encodeMap is correct
+// notice that "y" and "z" wrap around to "a" and "b"!
+console.assert(JSON.stringify(dr.encodeMap) === JSON.stringify({"a":"c","b":"d","c":"e","d":"f","e":"g","f":"h","g":"i","h":"j","i":"k","j":"l","k":"m","l":"n","m":"o","n":"p","o":"q","p":"r","q":"s","r":"t","s":"u","t":"v","u":"w","v":"x","w":"y","x":"z","y":"a","z":"b"}));
+
+</script>
+</html>
+
+
+
+    
+/*    let xs = str.split('');
+    let temp = '';
+    //xs.forEach((x)=>String.fromCharCode(charCodeAt(x)+rotation));
+
+    let str = 'hey';
+    let upper = str.split('').map((ch) => {
+      return ch.toUpperCase();
+    });
+    console.assert(JSON.stringify(upper) === JSON.stringify(['H','E','Y']));
+    //xs.forEach(x => {String.fromCharCode(charCodeAt(x)+rotation);});
+    for(let j = 0; j < str.length; j++){
+      //str[i] = String.fromCharCode(i+97)
+      //temp.assign(String.fromCharCode(str.charCodeAt(j)+rotation));
+      if(str[j]===' '){
+        temp = temp + ' ';
+      }
+      else{
+        temp = temp + String.fromCharCode((((str.charCodeAt(j)-97)+rotation)%26)+97);
+      }
+      //xs[j] = charCodeAt(xs[j]) + String.fromCharCode((j+rotation%26)+97);
+    }
+    console.log(temp);
+    //let xs = str.split('');
+
+    //console.log(xs.join(''));
+  */
